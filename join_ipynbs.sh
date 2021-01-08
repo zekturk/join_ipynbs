@@ -9,7 +9,6 @@
 # The folder adress that includes targeted .ipynb files
 # Usage: ./ipynb_combainer.sh /my/project/folder
 
-
 declare structure_1
 declare my_line
 declare my_line_with_comma
@@ -39,8 +38,8 @@ printf "${structure_1}" > "${created_file}"
 num=0
 
 for file in ${MY_ARRAY}; do
-    if [[ num -eq 0 ]]; then
-        my_folder=""${project_folder}"/"${file}""
+    my_folder=""${project_folder}"/"${file}""
+    if [[ num -eq 0 ]]; then   
         structure_2=$(cat "$my_folder");
         structure_2=${structure_2##*]};
         ((++num))
