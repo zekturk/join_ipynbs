@@ -23,37 +23,36 @@ declare created_file=""${project_folder}"/all.ipynb"
 
 [[ $1 ]] || { echo "Missing argument : Folder_Adress" >&2; exit 1; }
 
-if [[ -e ${created_file} ]]; then { echo "There is already an all.ipynb file! Rename or delete exsisting one" >&2; exit 1; }; fi
+if [[ -e "${created_file}" ]]; then { echo "There is already an all.ipynb file! Rename or delete exsisting one" >&2; exit 1; }; fi
 
 printf -v structure_1 "{\n \"cells\": ["
 printf -v my_line "  {\n   \"cell_type\": \"markdown\",\n   \"metadata\": {\n    \"collapsed\": true\n   },\n   \"source\": [\n    \"---\"\n   ]\n  }"
 printf -v my_line_with_comma "  {\n   \"cell_type\": \"markdown\",\n   \"metadata\": {\n    \"collapsed\": true\n   },\n   \"source\": [\n    \"---\"\n   ]\n  },"
 
 MY_ARRAY=("$(ls "${project_folder}" | grep .ipynb)")
-[[ ${MY_ARRAY} ]] || { echo "There is ipynb file!" >&2; exit 1; }
+[[ ${MY_ARRAY} ]] || { echo "There is no ipynb file!" >&2; exit 1; }
 
-touch ${created_file}
+touch "${created_file}"
 
-printf "${structure_1}" > ${created_file}
+printf "${structure_1}" > "${created_file}"
 
 num=0
 
-
 for file in ${MY_ARRAY}; do
     if [[ num -eq 0 ]]; then
-        echo "${file}";
-        structure_2=$(cat ""${project_folder}"/"${file}"");
+        my_folder=""${project_folder}"/"${file}""
+        structure_2=$(cat "$my_folder");
         structure_2=${structure_2##*]};
         ((++num))
     fi
-    new_var=$(cat ""${project_folder}"/"${file}"") 
+    new_var=$(cat "$my_folder") 
     new_var=${new_var#*[}
     new_var=${new_var%]*}
-    echo -n "${new_var}" >> ${created_file}
-    echo ${my_comma} >> ${created_file}
-    echo "${my_line_with_comma}" >> ${created_file}
+    echo -n "${new_var}" >> "${created_file}"
+    echo ${my_comma} >> "${created_file}"
+    echo "${my_line_with_comma}" >> "${created_file}"
 done
 
-echo "${my_line}" >> ${created_file}
-printf "]" >> ${created_file}
-echo "${structure_2}" >> ${created_file}
+echo "${my_line}" >> "${created_file}"
+printf "]" >> "${created_file}"
+echo "${structure_2}" >> "${created_file}"

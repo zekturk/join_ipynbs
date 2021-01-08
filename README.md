@@ -18,6 +18,8 @@ Examples:
 > ./ipynb_combiner.sh to/my/file/relativ/path
 
 > ./ipynb_combiner.sh /to/my/file/absolut/path
+
+> ./ipynb_combiner.sh "/to/my/file/path with/backspace"
 ```
 
 ## Authors
